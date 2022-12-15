@@ -38,13 +38,12 @@ public class Pg1_Login2 extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        usernameTxtField = new javax.swing.JTextField("Username");
+        usernameTxtField = new javax.swing.JTextField();
         passwordPassField = new javax.swing.JPasswordField();
         loginBtn = new javax.swing.JButton();
         registerBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1366, 760));
 
         jPanel1.setBackground(new java.awt.Color(232, 208, 169));
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 600));

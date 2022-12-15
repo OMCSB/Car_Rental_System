@@ -252,7 +252,9 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
                 if (uInputValues.length != 5){
                     System.out.println("Input Format is incorrect");
                 }
-                tCarDetail.addRow(uInputValues);
+                if (!carDetails.validateCarDataFile(uInputValues[0])){
+                    tCarDetail.addRow(uInputValues);
+                }
                 float uValue = Float.parseFloat(uInputValues[3]);
                 carDetails.writeCarDataFile(uInputValues[0], uInputValues[1], uInputValues[2], uValue, uInputValues[4]);
             } catch (IOException ex) {
@@ -260,7 +262,21 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
             }
             
         } else if (carComboBox.getSelectedItem() == "Delete"){
-            
+            try {
+                DefaultTableModel tCarDetail = (DefaultTableModel) carDetailsTable.getModel();
+                String uInput = JOptionPane.showInputDialog("Car Code to Remove");
+                for (int i = 0; i < tCarDetail.getRowCount(); i++){
+                    Object carDetailRowValue = tCarDetail.getValueAt(i, 0);
+                    if (carDetailRowValue.equals(uInput)){
+                        tCarDetail.removeRow(i);
+                        JOptionPane.showMessageDialog(null, "Car Successfully Removed");
+                        break;
+                    }
+                }
+                carDetails.overWriteCarDataFile(uInput);
+            } catch (IOException ex) {
+                Logger.getLogger(Pg2A_MainInterface.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_mCarBtnActionPerformed
 
@@ -270,10 +286,8 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
 
     private void quitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitBtnActionPerformed
         // TODO add your handling code here:
-        int showConfirmDialog = JOptionPane.showConfirmDialog(null, "Thank You For Using Our Service", "Confirmation Window", JOptionPane.OK_OPTION);
-        if(showConfirmDialog == 0){
-            System.exit(0);
-        }
+        JOptionPane.showMessageDialog(null, "Thank You For Using Our Service");
+        System.exit(0);
     }//GEN-LAST:event_quitBtnActionPerformed
 
     private void fileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileBtnActionPerformed

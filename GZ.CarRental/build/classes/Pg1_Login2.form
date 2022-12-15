@@ -143,9 +143,6 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="usernameTxtFieldActionPerformed"/>
           </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(&quot;Username&quot;)"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JPasswordField" name="passwordPassField">
         </Component>
