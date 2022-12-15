@@ -1,3 +1,8 @@
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -45,12 +50,6 @@ public class Pg1X_Register extends javax.swing.JFrame {
         jLabel1.setText("Register Account");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        usernameRegister.setText("Username");
-
-        userPasswordRegister.setText("jPasswordField1");
-
-        userRePasswordRegister.setText("jPasswordField2");
-
         jLabel2.setText("Username:");
 
         jLabel3.setText("Enter Password: ");
@@ -58,6 +57,11 @@ public class Pg1X_Register extends javax.swing.JFrame {
         jLabel4.setText("Re-enter Password:");
 
         registerBtn.setText("Register");
+        registerBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -116,6 +120,30 @@ public class Pg1X_Register extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
+        try {
+            // TODO add your handling code here:
+            String nUserName = usernameRegister.getText();
+            String nUserPassword = new String(userPasswordRegister.getPassword());
+            String nRUserPassword = new String(userRePasswordRegister.getPassword());
+            boolean dataCheck = DataIO.readCustomerAccountFile(nUserName, nUserPassword);
+            if (nUserPassword.equals(nRUserPassword)){
+                if (!dataCheck) {
+                    DataIO.writeCustomerAccountFile(nUserName, nUserPassword);
+                    JOptionPane.showMessageDialog(null, "Thank You for Registering");
+                    System.exit(0);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Username has been taken. Please use another Username");
+                    usernameRegister.setText("");
+                    userPasswordRegister.setText("");
+                    userRePasswordRegister.setText("");
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Pg1X_Register.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_registerBtnActionPerformed
 
     /**
      * @param args the command line arguments

@@ -1,4 +1,7 @@
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /*
@@ -255,7 +258,12 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_quitBtnActionPerformed
 
     private void fileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileBtnActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            DataIO.createFile();
+        } catch (IOException ex) {
+            Logger.getLogger(Pg2A_MainInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_fileBtnActionPerformed
 
     private void carComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carComboBoxActionPerformed

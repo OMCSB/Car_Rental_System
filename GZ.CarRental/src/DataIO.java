@@ -20,47 +20,49 @@ import java.util.logging.Logger;
  */
 public class DataIO {
     
-    public static void createFile(){
+    public static void createFile() throws IOException{
         File customerAccount = new File("customerAccount.txt");
+        if (customerAccount.createNewFile()){
+            System.out.println("File Created Succesfully");
+        }
         File carData = new File("carData.txt");
+        if (carData.createNewFile()){
+            System.out.println("File Created Succesfully");
+        }
         File customerBooking = new File("customerBooking.txt");
+        if (customerBooking.createNewFile()){
+            System.out.println("File Created Succesfully");
+        }
     }
     
     public static boolean readCustomerAccountFile(String userName, String userPassword) throws IOException{
         
-//      Declaring File Reader Variables
-        BufferedReader customerAccountFileReader = null;
-        
 //      Try Creating A File. In this case Customer Account
-        try{
-            customerAccountFileReader = new BufferedReader(new FileReader("customerAccount.txt"));
-           
-        } catch (Exception e) {
-            System.out.println("Something went wrong!");
-        }
-        
+        BufferedReader customerAccountFileReader = new BufferedReader(new FileReader("customerAccount.txt"));
         String tCustomerAccountDataStrg = customerAccountFileReader.readLine();
         while (tCustomerAccountDataStrg != null){
             String[] customerAccountDetail = tCustomerAccountDataStrg.split(":");
             if (userName.equals(customerAccountDetail[0]) && userPassword.equals(customerAccountDetail[1])){
                 return true;
             }
-            
-            tCustomerAccountDataStrg = customerAccountFileReader.readLine();
-        }
+                tCustomerAccountDataStrg = customerAccountFileReader.readLine();
+            }
+            customerAccountFileReader.close();  
+        
         customerAccountFileReader.close();
         return false;
-        
     }
     
     public static void writeCustomerAccountFile(String userName, String userPassword) throws IOException{
         BufferedWriter customerAccountFileWriter = null;
         try{
-            customerAccountFileWriter = new BufferedWriter(new FileWriter("customerAccount.txt"));
+            customerAccountFileWriter = new BufferedWriter(new FileWriter("customerAccount.txt", true));
         } catch (Exception e){
             System.out.println("An error has occured");
         }
-        customerAccountFileWriter.write(userName + ":" + userPassword);
+        customerAccountFileWriter.write(UserAccount.constructingCustomer(userName, userPassword));
+        customerAccountFileWriter.newLine();
+        customerAccountFileWriter.close();
     }
     
     public static void writeCarDataFile(String carCode, String carBrand, String carType, float rentPerDay, String carAvailability) throws IOException{

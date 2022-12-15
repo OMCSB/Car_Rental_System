@@ -150,6 +150,7 @@ public class Pg1_Login2 extends javax.swing.JFrame {
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
         // TODO add your handling code here:
+        new Pg1X_Register().setVisible(true);
     }//GEN-LAST:event_registerBtnActionPerformed
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
@@ -161,7 +162,7 @@ public class Pg1_Login2 extends javax.swing.JFrame {
             if (uUsername.equals("Admin") && uPassword.equals("adm123")){
                 new Pg2A_MainInterface().setVisible(true);
             } else if (uUsername.equals(dataIO.readCustomerAccountFile(uUsername, uPassword))){
-                new Pg2A_MainInterface().setVisible(true);
+                new Pg2C_MainInterface().setVisible(true);
             }
             else {
                 JOptionPane.showConfirmDialog(null, "Wrong Username/Passowrd\nPlease Try Again");
