@@ -47,12 +47,10 @@ public class DataIO {
             }
                 tCustomerAccountDataStrg = customerAccountFileReader.readLine();
             }
-            customerAccountFileReader.close();  
-        
         customerAccountFileReader.close();
         return false;
     }
-    
+
     public static void writeCustomerAccountFile(String userName, String userPassword) throws IOException{
         BufferedWriter customerAccountFileWriter = null;
         try{
@@ -63,16 +61,6 @@ public class DataIO {
         customerAccountFileWriter.write(UserAccount.constructingCustomer(userName, userPassword));
         customerAccountFileWriter.newLine();
         customerAccountFileWriter.close();
-    }
-    
-    public static void writeCarDataFile(String carCode, String carBrand, String carType, float rentPerDay, String carAvailability) throws IOException{
-        BufferedWriter carDataFileWriter = null;
-        try{
-            carDataFileWriter = new BufferedWriter(new FileWriter("carData.txt"));
-        } catch(Exception e){
-            System.out.println("An error has occured");
-        }
-        carDataFileWriter.write(carCode + ":" + carBrand + ":" + carType + ":"+ rentPerDay + ":" + carAvailability);
     }
     
 }

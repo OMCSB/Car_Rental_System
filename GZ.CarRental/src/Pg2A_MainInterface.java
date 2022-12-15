@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -17,9 +18,16 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
 
     /**
      * Creates new form Pg2A_MainInterface
+     * @throws java.io.IOException
      */
-    public Pg2A_MainInterface() {
+    public Pg2A_MainInterface() throws IOException {
         initComponents();
+        DefaultTableModel tCarDetail = (DefaultTableModel) carDetailsTable.getModel();
+//        myTable.setModel(tCarDetail);
+        
+        for (String[] readCarDataFile : carDetails.addCarDataFile()) {
+            tCarDetail.addRow(readCarDataFile);
+        }
     }
 
     /**
@@ -39,7 +47,7 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
         mBookBtn = new javax.swing.JButton();
         quitBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        carDetailsTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         carComboBox = new javax.swing.JComboBox<>();
         accountComboBox = new javax.swing.JComboBox<>();
@@ -119,12 +127,9 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        carDetailsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Car Code", "Brand", "Type", "Rent / Day (RM)", "Availability"
@@ -138,23 +143,23 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setColumnSelectionAllowed(true);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        carDetailsTable.setColumnSelectionAllowed(true);
+        carDetailsTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(carDetailsTable);
+        carDetailsTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         jLabel1.setText("Car Details");
 
-        carComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Edit", "Delete", "Add" }));
+        carComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Please Select", "Delete", "Add" }));
         carComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 carComboBoxActionPerformed(evt);
             }
         });
 
-        accountComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Edit", "Delete", "Add" }));
+        accountComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Please Select", "Delete", "Add" }));
 
-        bookingComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cancel", "Print" }));
+        bookingComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Approve", "Cancel", "Print" }));
 
         fileBtn.setText("Initalize Files");
         fileBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -170,30 +175,26 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 1366, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(quitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(200, 200, 200)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(mCarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(mAccBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(mBookBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fileBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(carComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(accountComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bookingComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(139, 352, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(290, 290, 290))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(200, 200, 200)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(quitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mCarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mAccBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mBookBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fileBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(carComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(accountComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bookingComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(139, 321, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,9 +219,9 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
                             .addComponent(bookingComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(fileBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(299, 299, 299)
+                .addGap(18, 18, 18)
                 .addComponent(quitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(374, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -243,6 +244,24 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
 
     private void mCarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mCarBtnActionPerformed
         // TODO add your handling code here:
+        if (carComboBox.getSelectedItem() == "Add"){
+            try {
+                DefaultTableModel tCarDetail = (DefaultTableModel) carDetailsTable.getModel();
+                String uInput = JOptionPane.showInputDialog("Enter car details(format -> carCode:carBraned:carType:rentPerDay:carAvailability): ");
+                String[] uInputValues = uInput.split(":");
+                if (uInputValues.length != 5){
+                    System.out.println("Input Format is incorrect");
+                }
+                tCarDetail.addRow(uInputValues);
+                float uValue = Float.parseFloat(uInputValues[3]);
+                carDetails.writeCarDataFile(uInputValues[0], uInputValues[1], uInputValues[2], uValue, uInputValues[4]);
+            } catch (IOException ex) {
+                Logger.getLogger(Pg2A_MainInterface.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        } else if (carComboBox.getSelectedItem() == "Delete"){
+            
+        }
     }//GEN-LAST:event_mCarBtnActionPerformed
 
     private void mAccBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mAccBtnActionPerformed
@@ -262,6 +281,7 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
             // TODO add your handling code here:
             DataIO.createFile();
         } catch (IOException ex) {
+            System.out.println("File exists");
             Logger.getLogger(Pg2A_MainInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_fileBtnActionPerformed
@@ -300,7 +320,11 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Pg2A_MainInterface().setVisible(true);
+                try {
+                    new Pg2A_MainInterface().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(Pg2A_MainInterface.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -310,12 +334,12 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> accountComboBox;
     private javax.swing.JComboBox<String> bookingComboBox;
     private javax.swing.JComboBox<String> carComboBox;
+    private javax.swing.JTable carDetailsTable;
     private javax.swing.JButton fileBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton mAccBtn;
     private javax.swing.JButton mBookBtn;
     private javax.swing.JButton mCarBtn;

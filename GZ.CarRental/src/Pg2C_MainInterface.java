@@ -231,6 +231,7 @@ public class Pg2C_MainInterface extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
                 new Pg2C_MainInterface().setVisible(true);
             }
         });

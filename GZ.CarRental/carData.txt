@@ -1,0 +1,2 @@
+XCV123:Honda:SUV:123.0:Available
+XXW145:Toyota:Sedan:200.0:Available

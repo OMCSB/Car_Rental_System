@@ -156,16 +156,15 @@ public class Pg1_Login2 extends javax.swing.JFrame {
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         try {
             // TODO add your handling code here:
-            
             String uUsername = usernameTxtField.getText();
             String uPassword = new String(passwordPassField.getPassword());
+            boolean dataCheck = DataIO.readCustomerAccountFile(uUsername, uPassword);
             if (uUsername.equals("Admin") && uPassword.equals("adm123")){
                 new Pg2A_MainInterface().setVisible(true);
-            } else if (uUsername.equals(dataIO.readCustomerAccountFile(uUsername, uPassword))){
+            } else if (dataCheck){
                 new Pg2C_MainInterface().setVisible(true);
-            }
-            else {
-                JOptionPane.showConfirmDialog(null, "Wrong Username/Passowrd\nPlease Try Again");
+            } else if(!dataCheck) {
+                JOptionPane.showMessageDialog(null, "Wrong Username/Passowrd\nPlease Try Again");
                 usernameTxtField.setText("");
                 passwordPassField.setText("");
             }
