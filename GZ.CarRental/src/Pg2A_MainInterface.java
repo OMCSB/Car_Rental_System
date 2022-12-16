@@ -24,9 +24,13 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
         initComponents();
         DefaultTableModel tCarDetail = (DefaultTableModel) carDetailsTable.getModel();
 //        myTable.setModel(tCarDetail);
+        DefaultTableModel tCustomerCarDetail = (DefaultTableModel) customerCarDetailsTable.getModel();
         
         for (String[] readCarDataFile : carDetails.addCarDataFile()) {
             tCarDetail.addRow(readCarDataFile);
+        }
+        for (String[] readCustomerCarDataFile : UserAccount.addCustomerCarDataFile()){
+            tCustomerCarDetail.addRow(readCustomerCarDataFile);
         }
     }
 
@@ -54,7 +58,7 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
         bookingComboBox = new javax.swing.JComboBox<>();
         fileBtn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        carDetailsTable1 = new javax.swing.JTable();
+        customerCarDetailsTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -184,7 +188,7 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
             }
         });
 
-        carDetailsTable1.setModel(new javax.swing.table.DefaultTableModel(
+        customerCarDetailsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -200,9 +204,9 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        carDetailsTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(carDetailsTable1);
-        carDetailsTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        customerCarDetailsTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(customerCarDetailsTable);
+        customerCarDetailsTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         jLabel2.setText("Customer Car Details");
 
@@ -406,7 +410,7 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> bookingComboBox;
     private javax.swing.JComboBox<String> carComboBox;
     private javax.swing.JTable carDetailsTable;
-    private javax.swing.JTable carDetailsTable1;
+    private javax.swing.JTable customerCarDetailsTable;
     private javax.swing.JButton fileBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -24,18 +24,26 @@ public class DataIO {
         File customerAccount = new File("customerAccount.txt");
         if (customerAccount.createNewFile()){
             System.out.println("File Created Succesfully");
+        } else if (customerAccount.exists()){
+            System.out.println("File exists");
         }
         File carData = new File("carData.txt");
         if (carData.createNewFile()){
             System.out.println("File Created Succesfully");
+        } else if (carData.exists()){
+            System.out.println("File exists");
         }
         File customerBooking = new File("customerBooking.txt");
         if (customerBooking.createNewFile()){
             System.out.println("File Created Succesfully");
+        } else if (customerBooking.exists()){
+            System.out.println("File exists");
         }
         File customerBookingStat = new File("customerBookingStatus.txt");
         if (customerBookingStat.createNewFile()){
             System.out.println("File Created Succesfully");
+        } else if (customerBookingStat.exists()){
+            System.out.println("File exists");
         }
     }
     

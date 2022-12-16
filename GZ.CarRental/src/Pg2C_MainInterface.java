@@ -1,8 +1,12 @@
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -18,6 +22,8 @@ import javax.swing.table.TableRowSorter;
 public class Pg2C_MainInterface extends javax.swing.JFrame {
 
     public static String value;
+    private boolean searchBtnActionPerformed;
+    private boolean clearBtnActionPerformed;
 
     /**
      * Creates new form Pg2C_MainInterface
@@ -143,6 +149,8 @@ public class Pg2C_MainInterface extends javax.swing.JFrame {
 
         jLabel1.setText("Days to rent");
 
+        daysToRentSpinner.setModel(new javax.swing.SpinnerNumberModel(0, null, 30, 1));
+
         clearBtn.setText("Clear");
         clearBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -254,7 +262,78 @@ public class Pg2C_MainInterface extends javax.swing.JFrame {
 
     private void bookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookBtnActionPerformed
         // TODO add your handling code here:
-        
+        if(searchBtnActionPerformed){
+            try {
+                TableRowSorter tCarList = (TableRowSorter) carListTbl.getRowSorter();
+                int tUserSelectedRow = carListTbl.getSelectedRow();
+                int userSelectedRow = tCarList.convertRowIndexToModel(tUserSelectedRow);
+                List<Object> selectedCarRow = new ArrayList<>();
+                for (int i = 0; i < carListTbl.getColumnCount(); i++){
+                    selectedCarRow.add(carListTbl.getModel().getValueAt(userSelectedRow, i));
+                }
+                List<String> strSelectedCarRow = new ArrayList<>();
+                for (Object obj : selectedCarRow){
+                    strSelectedCarRow.add(obj.toString());
+                }
+                SpinnerNumberModel daysToRent = (SpinnerNumberModel) daysToRentSpinner.getModel();
+                Number tSpinValue = daysToRent.getNumber();
+                int spinValue = tSpinValue.intValue();
+                
+                float rentPrice = Float.parseFloat(strSelectedCarRow.get(3));
+                float totalPrice = spinValue * rentPrice;
+                UserAccount.writeCustomerBookingFile(value, strSelectedCarRow.get(0), "Booked", spinValue, totalPrice, "Pending", "Pending");
+                JOptionPane.showMessageDialog(null, "Booking Confirmed! Please Await Payment Confirmation");
+            } catch (IOException ex) {
+                Logger.getLogger(Pg2C_MainInterface.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else if (clearBtnActionPerformed){
+            try {
+                DefaultTableModel tCarList = (DefaultTableModel) carListTbl.getModel();
+                int userSelectedRow = carListTbl.getSelectedRow();
+                List<Object> selectedCarRow = new ArrayList<>();
+                for (int i = 0; i < carListTbl.getColumnCount(); i++){
+                    selectedCarRow.add(tCarList.getValueAt(userSelectedRow, i));
+                }
+                List<String> strSelectedCarRow = new ArrayList<>();
+                for (Object obj : selectedCarRow){
+                    strSelectedCarRow.add(obj.toString());
+                }
+                SpinnerNumberModel daysToRent = (SpinnerNumberModel) daysToRentSpinner.getModel();
+                Number tSpinValue = daysToRent.getNumber();
+                int spinValue = tSpinValue.intValue();
+                
+                float rentPrice = Float.parseFloat(strSelectedCarRow.get(3));
+                float totalPrice = spinValue * rentPrice;
+                UserAccount.writeCustomerBookingFile(value, strSelectedCarRow.get(0), "Booked", spinValue, totalPrice, "Pending", "Pending");
+                JOptionPane.showMessageDialog(null, "Booking Confirmed! Please Await Payment Confirmation");
+            } catch (IOException ex) {
+                Logger.getLogger(Pg2C_MainInterface.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                DefaultTableModel tCarList = (DefaultTableModel) carListTbl.getModel();
+                int userSelectedRow = carListTbl.getSelectedRow();
+                List<Object> selectedCarRow = new ArrayList<>();
+                for (int i = 0; i < carListTbl.getColumnCount(); i++){
+                    selectedCarRow.add(tCarList.getValueAt(userSelectedRow, i));
+                }
+                List<String> strSelectedCarRow = new ArrayList<>();
+                for (Object obj : selectedCarRow){
+                    strSelectedCarRow.add(obj.toString());
+                }
+                SpinnerNumberModel daysToRent = (SpinnerNumberModel) daysToRentSpinner.getModel();
+                Number tSpinValue = daysToRent.getNumber();
+                int spinValue = tSpinValue.intValue();
+                
+                float rentPrice = Float.parseFloat(strSelectedCarRow.get(3));
+                float totalPrice = spinValue * rentPrice;
+                UserAccount.writeCustomerBookingFile(value, strSelectedCarRow.get(0), "Booked", spinValue, totalPrice, "Pending", "Pending");
+                JOptionPane.showMessageDialog(null, "Booking Confirmed! Please Await Payment Confirmation");
+            } catch (IOException ex) {
+                Logger.getLogger(Pg2C_MainInterface.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_bookBtnActionPerformed
 
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
