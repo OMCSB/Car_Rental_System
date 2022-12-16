@@ -1,3 +1,11 @@
+
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -13,10 +21,15 @@ public class Pg2C_MainInterface extends javax.swing.JFrame {
 
     /**
      * Creates new form Pg2C_MainInterface
+     * @throws java.io.IOException
      */
-    public Pg2C_MainInterface() {
+    public Pg2C_MainInterface() throws IOException {
         initComponents();
         customerWelcomeLbl.setText("Welcome, " + value + "!");
+        DefaultTableModel tCarList = (DefaultTableModel) carListTbl.getModel();
+        for (String[] readCarDataFile : carDetails.addCarDataFile()) {
+            tCarList.addRow(readCarDataFile);
+        }
     }
 
     /**
@@ -96,7 +109,7 @@ public class Pg2C_MainInterface extends javax.swing.JFrame {
             }
         });
 
-        searchFilterCombBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Search Filter", "Brand", "Type" }));
+        searchFilterCombBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Search Filter", "Brand", "Type", "Availability" }));
         searchFilterCombBox.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         bookBtn.setText("Book");
@@ -108,10 +121,7 @@ public class Pg2C_MainInterface extends javax.swing.JFrame {
 
         carListTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Car Code", "Brand", "Type", "Rent / Day (RM)", "Availability"
@@ -210,10 +220,18 @@ public class Pg2C_MainInterface extends javax.swing.JFrame {
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
         // TODO add your handling code here:
+        if (searchFilterCombBox.getSelectedItem() == "Brand"){
+            DefaultTableModel tCarList = (DefaultTableModel) carListTbl.getModel();
+            String uInput = searchTxtField.getText();
+            TableRowSorter<DefaultTableModel> carListSort = new TableRowSorter<>(tCarList);
+            carListSort.setRowFilter(RowFilter.regexFilter(uInput));
+            carListTbl.setRowSorter(carListSort);
+        }
     }//GEN-LAST:event_searchBtnActionPerformed
 
     private void bookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookBtnActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_bookBtnActionPerformed
 
     /**
@@ -247,7 +265,11 @@ public class Pg2C_MainInterface extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 
-                new Pg2C_MainInterface().setVisible(true);
+                try {
+                    new Pg2C_MainInterface().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(Pg2C_MainInterface.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
