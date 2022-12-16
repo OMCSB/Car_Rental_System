@@ -160,9 +160,13 @@ public class Pg1_Login2 extends javax.swing.JFrame {
             boolean dataCheck = DataIO.readCustomerAccountFile(uUsername, uPassword);
             if (uUsername.equals("Admin") && uPassword.equals("adm123")){
                 new Pg2A_MainInterface().setVisible(true);
+                usernameTxtField.setText("");
+                passwordPassField.setText("");
             } else if (dataCheck){
                 Pg2C_MainInterface.value = uUsername;
                 new Pg2C_MainInterface().setVisible(true);
+                usernameTxtField.setText("");
+                passwordPassField.setText("");
             } else if(!dataCheck) {
                 JOptionPane.showMessageDialog(null, "Wrong Username/Passowrd\nPlease Try Again");
                 usernameTxtField.setText("");

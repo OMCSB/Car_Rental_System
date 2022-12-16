@@ -6,6 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -75,4 +80,34 @@ public class DataIO {
         customerAccountFileWriter.close();
     }
     
+    public static Vector<String[]> addCustomerAccountDataFile() throws FileNotFoundException, IOException{
+        BufferedReader tCustomerAccountDataFileReader = new BufferedReader(new FileReader("customerAccount.txt"));
+        String tCustomerAccountDataStrg = tCustomerAccountDataFileReader.readLine();
+        Vector<String[]> fCustomerAccountDataDetail = new Vector<String[]>();
+        while (tCustomerAccountDataStrg != null){
+            String[] customerAccountDataDetail = tCustomerAccountDataStrg.split(":");
+            fCustomerAccountDataDetail.add(customerAccountDataDetail);
+            tCustomerAccountDataStrg = tCustomerAccountDataFileReader.readLine();
+        }
+        return fCustomerAccountDataDetail;
+    }
+    
+    public static void overWriteCustomerAccountDataFile(String userName) throws IOException{
+        Path nPath = Paths.get("customerAccount.txt");
+        BufferedReader oriCustomerAccountDataFileReader = new BufferedReader(new FileReader("customerAccount.txt"));
+        String customerAccountDataStrg = oriCustomerAccountDataFileReader.readLine();
+         List<String> dataLines = Files.readAllLines(nPath);
+         int n = 0;
+         while (customerAccountDataStrg != null){
+             String[] tCustomerAccountDetail = customerAccountDataStrg.split(":");
+             if (tCustomerAccountDetail[0].equals(userName)){
+                 dataLines.remove(n);
+                 break;
+             }
+             customerAccountDataStrg = oriCustomerAccountDataFileReader.readLine();
+             n++;
+         }
+         Files.write(nPath, dataLines);
+         oriCustomerAccountDataFileReader.close();
+    }
 }

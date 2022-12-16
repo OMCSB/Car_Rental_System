@@ -147,7 +147,7 @@ public class Pg1X_Register extends javax.swing.JFrame {
                 if (!dataCheck) {
                     DataIO.writeCustomerAccountFile(nUserName, nUserPassword);
                     JOptionPane.showMessageDialog(null, "Thank You for Registering");
-                    System.exit(0);
+                    this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "Username has been taken. Please use another Username");
                     usernameRegister.setText("");
@@ -162,7 +162,7 @@ public class Pg1X_Register extends javax.swing.JFrame {
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         // TODO add your handling code here:
-        System.exit(0);
+        this.dispose();
     }//GEN-LAST:event_backBtnActionPerformed
 
     /**

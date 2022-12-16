@@ -23,14 +23,17 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
     public Pg2A_MainInterface() throws IOException {
         initComponents();
         DefaultTableModel tCarDetail = (DefaultTableModel) carDetailsTable.getModel();
-//        myTable.setModel(tCarDetail);
         DefaultTableModel tCustomerCarDetail = (DefaultTableModel) customerCarDetailsTable.getModel();
+        DefaultTableModel tCustomerAccountDetail = (DefaultTableModel) customerAccountDetailsTable.getModel();
         
         for (String[] readCarDataFile : carDetails.addCarDataFile()) {
             tCarDetail.addRow(readCarDataFile);
         }
         for (String[] readCustomerCarDataFile : UserAccount.addCustomerCarDataFile()){
             tCustomerCarDetail.addRow(readCustomerCarDataFile);
+        }
+        for (String[] readCustomerAccountDataFile : DataIO.addCustomerAccountDataFile()){
+            tCustomerAccountDetail.addRow(readCustomerAccountDataFile);
         }
     }
 
@@ -60,6 +63,9 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         customerCarDetailsTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        customerAccountDetailsTable = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GZ.Car Rental System_Admin Interface");
@@ -155,6 +161,7 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
         jScrollPane1.setViewportView(carDetailsTable);
         carDetailsTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (carDetailsTable.getColumnModel().getColumnCount() > 0) {
+            carDetailsTable.getColumnModel().getColumn(0).setHeaderValue("Car Code");
             carDetailsTable.getColumnModel().getColumn(1).setHeaderValue("Brand");
             carDetailsTable.getColumnModel().getColumn(2).setHeaderValue("Type");
             carDetailsTable.getColumnModel().getColumn(3).setHeaderValue("Rent / Day (RM)");
@@ -207,8 +214,33 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
         customerCarDetailsTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(customerCarDetailsTable);
         customerCarDetailsTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (customerCarDetailsTable.getColumnModel().getColumnCount() > 0) {
+            customerCarDetailsTable.getColumnModel().getColumn(1).setHeaderValue("Car Code");
+        }
 
         jLabel2.setText("Customer Car Details");
+
+        customerAccountDetailsTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Username", "Password"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        customerAccountDetailsTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(customerAccountDetailsTable);
+        customerAccountDetailsTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        jLabel3.setText("Customer Account Details");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -227,22 +259,29 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
                     .addComponent(mAccBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mBookBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fileBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(carComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(accountComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bookingComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(139, 321, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(carComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(accountComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(bookingComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(139, 321, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addGap(250, 250, 250))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -274,8 +313,13 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
                     .addComponent(quitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(156, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -294,6 +338,7 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
 
     private void mBookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mBookBtnActionPerformed
         // TODO add your handling code here:
+//        if ()
     }//GEN-LAST:event_mBookBtnActionPerformed
 
     private void mCarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mCarBtnActionPerformed
@@ -337,14 +382,30 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
     private void mAccBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mAccBtnActionPerformed
         // TODO add your handling code here:
         if (accountComboBox.getSelectedItem() == "Delete"){
-//            UserAccount;
+            try {
+                DefaultTableModel tCustomerAccountDetail = (DefaultTableModel) customerAccountDetailsTable.getModel();
+                String uInput = JOptionPane.showInputDialog("Username to Remove");
+                for (int i = 0; i < tCustomerAccountDetail.getRowCount(); i++){
+                    Object customerAccountDetailRowValue = tCustomerAccountDetail.getValueAt(i, 0);
+                    if (customerAccountDetailRowValue.equals(uInput)){
+                        tCustomerAccountDetail.removeRow(i);
+                        JOptionPane.showMessageDialog(null, "Account Successfully Removed");
+                        break;
+                    }
+                }
+                DataIO.overWriteCustomerAccountDataFile(uInput);
+            } catch (IOException ex) {
+                Logger.getLogger(Pg2A_MainInterface.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (accountComboBox.getSelectedItem() == "Add"){
+            
         }
     }//GEN-LAST:event_mAccBtnActionPerformed
 
     private void quitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitBtnActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null, "Thank You For Using Our Service");
-        System.exit(0);
+        this.dispose();
     }//GEN-LAST:event_quitBtnActionPerformed
 
     private void fileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileBtnActionPerformed
@@ -410,14 +471,17 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> bookingComboBox;
     private javax.swing.JComboBox<String> carComboBox;
     private javax.swing.JTable carDetailsTable;
+    private javax.swing.JTable customerAccountDetailsTable;
     private javax.swing.JTable customerCarDetailsTable;
     private javax.swing.JButton fileBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton mAccBtn;
     private javax.swing.JButton mBookBtn;
     private javax.swing.JButton mCarBtn;
