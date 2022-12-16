@@ -1,5 +1,7 @@
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -338,7 +340,45 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
 
     private void mBookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mBookBtnActionPerformed
         // TODO add your handling code here:
-//        if ()
+        if (bookingComboBox.getSelectedItem() == "Approve"){
+            try {
+                DefaultTableModel tBookDetail = (DefaultTableModel) customerCarDetailsTable.getModel();
+                int userSelectedRow = customerCarDetailsTable.getSelectedRow();
+                customerCarDetailsTable.setValueAt("Approved", userSelectedRow, 2);
+                List<Object> selectedBookingRow = new ArrayList<>();
+                for (int i = 0; i < customerCarDetailsTable.getColumnCount(); i++){
+                    selectedBookingRow.add(tBookDetail.getValueAt(userSelectedRow, i));
+                }
+                List<String> strSelectedBookingRow = new ArrayList<>();
+                for (Object obj : selectedBookingRow){
+                    strSelectedBookingRow.add(obj.toString());
+                }
+                UserAccount.overWriteCustomerBookingDataFile(strSelectedBookingRow.get(0), "Approved");
+                
+                JOptionPane.showMessageDialog(null, "Booking Successfully Approved");
+            } catch (IOException ex) {
+                Logger.getLogger(Pg2A_MainInterface.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (bookingComboBox.getSelectedItem() == "Decline"){
+            try {
+                DefaultTableModel tBookDetail = (DefaultTableModel) customerCarDetailsTable.getModel();
+                int userSelectedRow = customerCarDetailsTable.getSelectedRow();
+                customerCarDetailsTable.setValueAt("Approved", userSelectedRow, 2);
+                List<Object> selectedBookingRow = new ArrayList<>();
+                for (int i = 0; i < customerCarDetailsTable.getColumnCount(); i++){
+                    selectedBookingRow.add(tBookDetail.getValueAt(userSelectedRow, i));
+                }
+                List<String> strSelectedBookingRow = new ArrayList<>();
+                for (Object obj : selectedBookingRow){
+                    strSelectedBookingRow.add(obj.toString());
+                }
+                UserAccount.overWriteCustomerBookingDataFile(strSelectedBookingRow.get(0), "Declined");
+                
+                JOptionPane.showMessageDialog(null, "Booking Successfully Declined");
+            } catch (IOException ex) {
+                Logger.getLogger(Pg2A_MainInterface.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_mBookBtnActionPerformed
 
     private void mCarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mCarBtnActionPerformed

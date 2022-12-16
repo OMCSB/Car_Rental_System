@@ -42,11 +42,38 @@ public class UserAccount extends carDetails{
         Vector<String[]> fCustomerCarDataDetail = new Vector<String[]>();
         while (tCustomerCarDataStrg != null){
             String[] tCustomerCarDataDetail = tCustomerCarDataStrg.split(":");
-            String[] customerCarDataDetail = {tCustomerCarDataDetail[0], tCustomerCarDataDetail[1], tCustomerCarDataDetail[4]};
+            String[] customerCarDataDetail = {tCustomerCarDataDetail[0], tCustomerCarDataDetail[1], tCustomerCarDataDetail[6]};
             fCustomerCarDataDetail.add(customerCarDataDetail);
             tCustomerCarDataStrg = tCustomerCarDataFileReader.readLine();
         }
         return fCustomerCarDataDetail;
     }
     
+    public static void overWriteCustomerBookingDataFile(String userName, String bookStatus) throws IOException{
+        Path nPath  = Paths.get("customerBooking.txt");
+        BufferedReader oriCustomerBookingFileReader = new BufferedReader(new FileReader("customerBooking.txt"));
+        String customerBookDataStrg = oriCustomerBookingFileReader.readLine();
+        List<String> dataLines = Files.readAllLines(nPath);
+        int n = 0;
+        String[] strgDataLine = null;
+        while(customerBookDataStrg != null){
+            String[] tCustomerBooking = customerBookDataStrg.split(":");
+            if (tCustomerBooking[0].equals(userName)){
+                strgDataLine = tCustomerBooking;
+                dataLines.remove(n);
+            }
+            customerBookDataStrg = oriCustomerBookingFileReader.readLine();
+            n++;
+        }
+        strgDataLine[6] = bookStatus;
+        Files.write(nPath, dataLines);
+        oriCustomerBookingFileReader.close();
+        
+        BufferedWriter y = new BufferedWriter(new FileWriter("customerBooking.txt", true));
+        for (int i= 0; i < strgDataLine.length; i++){
+            y.write(strgDataLine[i] + ":");
+        }
+        y.newLine();
+        y.close();
+    }
 }
