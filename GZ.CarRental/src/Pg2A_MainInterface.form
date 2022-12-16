@@ -350,7 +350,7 @@
               <StringArray count="3">
                 <StringItem index="0" value="Please Select"/>
                 <StringItem index="1" value="Delete"/>
-                <StringItem index="2" value="Add"/>
+                <StringItem index="2" value="Edit"/>
               </StringArray>
             </Property>
           </Properties>

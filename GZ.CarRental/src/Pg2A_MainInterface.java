@@ -177,7 +177,7 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
             }
         });
 
-        accountComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Please Select", "Delete", "Add" }));
+        accountComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Please Select", "Delete", "Edit" }));
 
         bookingComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Approve", "Cancel", "Print" }));
         bookingComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -356,6 +356,7 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
                 }
                 float uValue = Float.parseFloat(uInputValues[3]);
                 carDetails.writeCarDataFile(uInputValues[0], uInputValues[1], uInputValues[2], uValue, uInputValues[4]);
+                JOptionPane.showMessageDialog(null, "Car Successfully Added");
             } catch (IOException ex) {
                 Logger.getLogger(Pg2A_MainInterface.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -372,6 +373,7 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
                         break;
                     }
                 }
+                JOptionPane.showMessageDialog(null, "Car Successfully Deleted");
                 carDetails.overWriteCarDataFile(uInput);
             } catch (IOException ex) {
                 Logger.getLogger(Pg2A_MainInterface.class.getName()).log(Level.SEVERE, null, ex);
@@ -397,8 +399,46 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(Pg2A_MainInterface.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (accountComboBox.getSelectedItem() == "Add"){
-            
+        } else if (accountComboBox.getSelectedItem() == "Edit"){
+            DefaultTableModel tCustomerAccountDetail = (DefaultTableModel) customerAccountDetailsTable.getModel();
+            String uInput = JOptionPane.showInputDialog("Edit Username(U)/Password(P)");
+            if (uInput.equals("U")){
+                try {
+                    String nUInput = JOptionPane.showInputDialog("Enter Username");
+                    for (int i = 0; i < tCustomerAccountDetail.getRowCount(); i++){
+                        Object customerAccountDetailRowValue = tCustomerAccountDetail.getValueAt(i, 0);
+                        Object nCustomerAccountDetailRowValue = tCustomerAccountDetail.getValueAt(i, 1);
+                        String nNUInput = nCustomerAccountDetailRowValue.toString();
+                        if (customerAccountDetailRowValue.equals(nUInput)){
+                            String nUUInput = JOptionPane.showInputDialog("Enter New Username");
+                            tCustomerAccountDetail.setValueAt(nUUInput, i, 0);
+                            JOptionPane.showMessageDialog(null, "Username Successfully Modified");
+                            DataIO.writeCustomerAccountFile(nUUInput, nNUInput);
+                        }
+                    }    
+                    DataIO.overWriteCustomerAccountDataFile(nUInput);
+                } catch (IOException ex) {
+                    Logger.getLogger(Pg2A_MainInterface.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            } else if(uInput.equals("P")){
+                try {
+                    String nUInput = JOptionPane.showInputDialog("Enter Username");
+                    for (int i = 0; i < tCustomerAccountDetail.getRowCount(); i++){
+                        Object customerAccountDetailRowValue = tCustomerAccountDetail.getValueAt(i, 0);
+                        String nCustomerAccountDetailRowValue = customerAccountDetailRowValue.toString();
+                        if (customerAccountDetailRowValue.equals(nUInput)){
+                            String nUUInput = JOptionPane.showInputDialog("Enter New Password");
+                            tCustomerAccountDetail.setValueAt(nUUInput, i, 1);
+                            JOptionPane.showMessageDialog(null, "Password Successfully Modified");
+                            DataIO.writeCustomerAccountFile(nCustomerAccountDetailRowValue, nUUInput);
+                        }
+                    }
+                    DataIO.overWriteCustomerAccountDataFile(nUInput);
+                } catch (IOException ex) {
+                    Logger.getLogger(Pg2A_MainInterface.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }//GEN-LAST:event_mAccBtnActionPerformed
 
