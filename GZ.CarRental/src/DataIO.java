@@ -33,6 +33,10 @@ public class DataIO {
         if (customerBooking.createNewFile()){
             System.out.println("File Created Succesfully");
         }
+        File customerBookingStat = new File("customerBookingStatus.txt");
+        if (customerBookingStat.createNewFile()){
+            System.out.println("File Created Succesfully");
+        }
     }
     
     public static boolean readCustomerAccountFile(String userName, String userPassword) throws IOException{

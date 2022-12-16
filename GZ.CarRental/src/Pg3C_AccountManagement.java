@@ -9,11 +9,14 @@
  */
 public class Pg3C_AccountManagement extends javax.swing.JFrame {
 
+    public static String value;
+
     /**
      * Creates new form Pg3C_AccountManagement
      */
     public Pg3C_AccountManagement() {
         initComponents();
+        usernameLbl.setText("Hi! " + value);
     }
 
     /**

@@ -53,6 +53,9 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
         accountComboBox = new javax.swing.JComboBox<>();
         bookingComboBox = new javax.swing.JComboBox<>();
         fileBtn = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        carDetailsTable1 = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GZ.Car Rental System_Admin Interface");
@@ -147,6 +150,12 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
         carDetailsTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(carDetailsTable);
         carDetailsTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (carDetailsTable.getColumnModel().getColumnCount() > 0) {
+            carDetailsTable.getColumnModel().getColumn(1).setHeaderValue("Brand");
+            carDetailsTable.getColumnModel().getColumn(2).setHeaderValue("Type");
+            carDetailsTable.getColumnModel().getColumn(3).setHeaderValue("Rent / Day (RM)");
+            carDetailsTable.getColumnModel().getColumn(4).setHeaderValue("Availability");
+        }
 
         jLabel1.setText("Car Details");
 
@@ -160,6 +169,11 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
         accountComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Please Select", "Delete", "Add" }));
 
         bookingComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Approve", "Cancel", "Print" }));
+        bookingComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bookingComboBoxActionPerformed(evt);
+            }
+        });
 
         fileBtn.setText("Initalize Files");
         fileBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -169,6 +183,28 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
                 fileBtnActionPerformed(evt);
             }
         });
+
+        carDetailsTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Username", "Car Code", "Status"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        carDetailsTable1.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(carDetailsTable1);
+        carDetailsTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        jLabel2.setText("Customer Car Details");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -187,13 +223,23 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
                     .addComponent(mAccBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mBookBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fileBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(carComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(accountComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bookingComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(139, 321, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(carComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(accountComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bookingComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(139, 321, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addGap(250, 250, 250))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -220,8 +266,12 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(fileBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(quitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(374, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(quitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(156, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -282,6 +332,9 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
 
     private void mAccBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mAccBtnActionPerformed
         // TODO add your handling code here:
+        if (accountComboBox.getSelectedItem() == "Delete"){
+//            UserAccount;
+        }
     }//GEN-LAST:event_mAccBtnActionPerformed
 
     private void quitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitBtnActionPerformed
@@ -303,6 +356,10 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
     private void carComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_carComboBoxActionPerformed
+
+    private void bookingComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookingComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bookingComboBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -349,11 +406,14 @@ public class Pg2A_MainInterface extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> bookingComboBox;
     private javax.swing.JComboBox<String> carComboBox;
     private javax.swing.JTable carDetailsTable;
+    private javax.swing.JTable carDetailsTable1;
     private javax.swing.JButton fileBtn;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton mAccBtn;
     private javax.swing.JButton mBookBtn;
     private javax.swing.JButton mCarBtn;
