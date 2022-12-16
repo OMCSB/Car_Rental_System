@@ -277,10 +277,14 @@ public class Pg3C_AccountManagement extends javax.swing.JFrame {
 
     private void bookingLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookingLblMouseClicked
         // TODO add your handling code here:
+        customerBookingsTbl.updateUI();
+        customerBookingsTbl.repaint();
     }//GEN-LAST:event_bookingLblMouseClicked
 
     private void pastOrderLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pastOrderLblMouseClicked
         // TODO add your handling code here:
+        customerBookingsTbl.updateUI();
+        customerBookingsTbl.repaint();
     }//GEN-LAST:event_pastOrderLblMouseClicked
 
     /**
