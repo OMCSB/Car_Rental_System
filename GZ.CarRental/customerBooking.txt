@@ -1,1 +1,1 @@
-a:XXW145:2:400.0:Pending:Pending:Approved:
+a:XXW145:2:400.0:Paid:Pending:Approved:

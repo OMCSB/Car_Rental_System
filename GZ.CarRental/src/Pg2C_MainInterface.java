@@ -232,9 +232,13 @@ public class Pg2C_MainInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_searchTxtFieldActionPerformed
 
     private void customerWelcomeLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerWelcomeLblMouseClicked
-        // TODO add your handling code here:
-        Pg3C_AccountManagement.value = value;
-        new Pg3C_AccountManagement().setVisible(true);
+        try {
+            // TODO add your handling code here:
+            Pg3C_AccountManagement.value = value;
+            new Pg3C_AccountManagement().setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(Pg2C_MainInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_customerWelcomeLblMouseClicked
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
