@@ -22,14 +22,12 @@ public class UserAccount extends carDetails{
         String prepareData = userName + ":" + userPassword;
         return prepareData;
     }
-    public static void editCustomerCarDetail(String userName, String carCode, String bookStatus) throws IOException{
-        Path nPath = Paths.get("customerAccount.txt");
-        BufferedReader customerDataFileReader = new BufferedReader(new FileReader("customerAccount.txt"));
+    public static void readCustomerBookingFile(String userName, String carCode, String bookStatus) throws IOException{
+        BufferedReader customerDataFileReader = new BufferedReader(new FileReader("customerBooking.txt"));
         String customerDataStrg = customerDataFileReader.readLine();
-        List<String> dataLines = Files.readAllLines(nPath);
-        int n = 0;
         while (customerDataStrg != null){
             String[] tCustomerDetail = customerDataStrg.split(":");
+            customerDataStrg = customerDataFileReader.readLine();
         }
     }
 

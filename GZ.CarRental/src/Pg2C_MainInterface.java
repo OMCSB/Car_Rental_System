@@ -53,6 +53,7 @@ public class Pg2C_MainInterface extends javax.swing.JFrame {
         carListTbl = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         daysToRentSpinner = new javax.swing.JSpinner();
+        clearBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -142,6 +143,13 @@ public class Pg2C_MainInterface extends javax.swing.JFrame {
 
         jLabel1.setText("Days to rent");
 
+        clearBtn.setText("Clear");
+        clearBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -156,6 +164,8 @@ public class Pg2C_MainInterface extends javax.swing.JFrame {
                         .addComponent(searchFilterCombBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(54, 54, 54)
                         .addComponent(searchBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(clearBtn)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -183,7 +193,8 @@ public class Pg2C_MainInterface extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchBtn)
-                    .addComponent(searchFilterCombBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchFilterCombBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(clearBtn))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
@@ -226,6 +237,18 @@ public class Pg2C_MainInterface extends javax.swing.JFrame {
             TableRowSorter<DefaultTableModel> carListSort = new TableRowSorter<>(tCarList);
             carListSort.setRowFilter(RowFilter.regexFilter(uInput));
             carListTbl.setRowSorter(carListSort);
+        } else if (searchFilterCombBox.getSelectedItem() == "Type"){
+            DefaultTableModel tCarList = (DefaultTableModel) carListTbl.getModel();
+            String uInput = searchTxtField.getText();
+            TableRowSorter<DefaultTableModel> carListSort = new TableRowSorter<>(tCarList);
+            carListSort.setRowFilter(RowFilter.regexFilter(uInput));
+            carListTbl.setRowSorter(carListSort);
+        } else if (searchFilterCombBox.getSelectedItem() == "Availability"){
+            DefaultTableModel tCarList = (DefaultTableModel) carListTbl.getModel();
+            String uInput = searchTxtField.getText();
+            TableRowSorter<DefaultTableModel> carListSort = new TableRowSorter<>(tCarList);
+            carListSort.setRowFilter(RowFilter.regexFilter(uInput));
+            carListTbl.setRowSorter(carListSort);
         }
     }//GEN-LAST:event_searchBtnActionPerformed
 
@@ -233,6 +256,14 @@ public class Pg2C_MainInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_bookBtnActionPerformed
+
+    private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
+        // TODO add your handling code here:
+        TableRowSorter sorter = (TableRowSorter) carListTbl.getRowSorter();
+        sorter.setRowFilter(null);
+        searchFilterCombBox.setSelectedItem("Select Search Filter");
+        searchTxtField.setText("");
+    }//GEN-LAST:event_clearBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -278,6 +309,7 @@ public class Pg2C_MainInterface extends javax.swing.JFrame {
     private javax.swing.JLabel WinLbl;
     private javax.swing.JButton bookBtn;
     private javax.swing.JTable carListTbl;
+    private javax.swing.JButton clearBtn;
     private javax.swing.JLabel customerWelcomeLbl;
     private javax.swing.JSpinner daysToRentSpinner;
     private javax.swing.JLabel jLabel1;
